@@ -1,0 +1,19 @@
+<html>
+     <head>
+        <title>Churn Rate Calculator </title>
+     </head>
+     <body >
+         <center><i><h1>Churn Rate Calculator</h1></i></center>
+         <center><i><h2>ashik(26018692)</h2></i></center>
+     <form method="post">
+        {% csrf_token %}<br>
+            <label>CustLost:</label>
+            <input type="text" name="{{cust_lost}}"><br><br>
+            <label>InitCut:</label>
+            <input type="text" name="{{init_cut}}"><br><br>
+            <input type="submit" value="Calculate"><br><br>
+            <label>Churn Rate:</label>
+            <input type="text" value="{{churn_rate}}"><br><br>
+     </form>
+     </body>
+</html>

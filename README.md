@@ -42,12 +42,59 @@ Render the result to the HTML template.
 Publish the website in Localhost.
 
 ## PROGRAM:
+```
+ashik.html
+
+<html>
+     <head>
+        <title>Churn Rate Calculator </title>
+     </head>
+     <body >
+         <center><i><h1>Churn Rate Calculator</h1></i></center>
+         <center><i><h2>ashik(26018692)</h2></i></center>
+     <form method="post">
+        {% csrf_token %}<br>
+            <label>CustLost:</label>
+            <input type="text" name="{{cust_lost}}"><br><br>
+            <label>InitCut:</label>
+            <input type="text" name="{{init_cut}}"><br><br>
+            <input type="submit" value="Calculate"><br><br>
+            <label>Churn Rate:</label>
+            <input type="text" value="{{churn_rate}}"><br><br>
+     </form>
+     </body>
+</html>
+
+views.py
+
+from django.shortcuts import render
+def calculate(request):
+    custlost = int(request.POST.get('price', '0'))
+    initlost = int(request.POST.get('gst', '0'))
+    bill = initlost + (initlost * custlost / 100) if request.method == 'POST' else 0
+    print("initial customer =",initlost)
+    print("customer lost =",custlost)
+    print("churn rate =",bill)
+    return render(request, 'myapp/math.html',{'initlost': initlost, 'custlost': custlost, 'bill': bill})
+
+urls.py
+
+from django.contrib import admin
+from django.urls import path
+from myapp import views
+
+urlpatterns = [path('', views.calculate, name='calculate'),]
+
+```
+
 
 
 ## OUTPUT - SERVER SIDE:
+![alt text](<Screenshot 2026-11-13 140310.png>)
 
 
 ## OUTPUT - WEBPAGE:
+![alt text](<Screenshot 2026-11-13 140225.png>)
 
 
 ## RESULT:
