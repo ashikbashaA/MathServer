@@ -45,56 +45,68 @@ Publish the website in Localhost.
 ```
 ashik.html
 
-<html>
-     <head>
-        <title>Churn Rate Calculator </title>
-     </head>
-     <body >
-         <center><i><h1>Churn Rate Calculator</h1></i></center>
-         <center><i><h2>ashik(26018692)</h2></i></center>
-     <form method="post">
-        {% csrf_token %}<br>
-            <label>CustLost:</label>
-            <input type="text" name="{{cust_lost}}"><br><br>
-            <label>InitCut:</label>
-            <input type="text" name="{{init_cut}}"><br><br>
+html>
+    <head>
+        <title>Simple Webpage</title>
+    
+    </head>
+    <body>
+        
+        <h1 align="center">Churn Rate Calculator</h1>
+        <h2 align="center">ashik basha(26018692)</h2>
+
+        <form method="POST">
+            {%csrf_token%}<br>
+
+            
+            <label>Lost customer:</label>
+            <input type="text" name="CustLost" value="{{lost}}" ><br><br>
+            <label>Initial customer:</label>
+            <input type="text" name="InitCust" value="{{init}}"><br><br>
             <input type="submit" value="Calculate"><br><br>
+
+
             <label>Churn Rate:</label>
-            <input type="text" value="{{churn_rate}}"><br><br>
-     </form>
-     </body>
-</html>
+            <input type="text" name="ChurnRate" value="{{ChurnRate}}">
+
+
+
+
+
+        </form>
+    </body>
+</html> 
 
 views.py
-
 from django.shortcuts import render
-def calculate(request):
-    custlost = int(request.POST.get('price', '0'))
-    initlost = int(request.POST.get('gst', '0'))
-    bill = initlost + (initlost * custlost / 100) if request.method == 'POST' else 0
-    print("initial customer =",initlost)
-    print("customer lost =",custlost)
-    print("churn rate =",bill)
-    return render(request, 'myapp/math.html',{'initlost': initlost, 'custlost': custlost, 'bill': bill})
+
+def calculate_rate(request):
+    
+    lost=float(request.POST.get("CustLost",'0'))
+    init=float(request.POST.get("InitCust",'0'))
+    ChurnRate = (lost/init)*100 if request.method == 'POST' else 0
+    print(f"Initial Customer: {init}numbers \n Lost Customer: {lost}numbers \n Churn Rate: {ChurnRate}")
+    return render(request, "myApp/math.html",{"init": init, "lost": lost, "ChurnRate": ChurnRate})
 
 urls.py
-
 from django.contrib import admin
 from django.urls import path
 from myapp import views
 
-urlpatterns = [path('', views.calculate, name='calculate'),]
+
+urlpatterns = [path('', views.calculate_rate, name='calculate_rate'),]
 
 ```
 
 
 
 ## OUTPUT - SERVER SIDE:
-![alt text](<Screenshot 2026-11-13 140310.png>)
+![alt text](<Screenshot 2026-11-17 131934.png>)
 
 
-## OUTPUT - WEBPAGE:
-![alt text](<Screenshot 2026-11-13 140225.png>)
+## OUTPUT - WEB PAGE:
+![alt text](<Screenshot 2026-11-17 131921.png>)
+
 
 
 ## RESULT:
